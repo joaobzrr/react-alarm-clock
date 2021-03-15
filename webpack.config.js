@@ -119,7 +119,7 @@ module.exports = env => {
 function getConfig(config) {
     const plugins = [
         new CleanWebpackPlugin({
-            cleanOnceBeforeBuildPatterns: ["**/*", "!.git"]
+            cleanOnceBeforeBuildPatterns: ["**/*", "!.git/**"]
         }),
         new HtmlWebpackPlugin({
             template: path.resolve(srcDir, templateFileName),
