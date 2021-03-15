@@ -44,7 +44,8 @@ module.exports = env => {
             rules: [
                 {
                     test: /\.(ts|tsx)$/,
-                    loader: "ts-loader"
+                    exclude: /node_modules/,
+                    use: ["babel-loader", "ts-loader"]
                 },
                 {
                     test: /\.(scss|css)$/,
@@ -102,10 +103,11 @@ module.exports = env => {
         optimization: {
             minimizer: [
                 new TerserPlugin({
-                    extractComments: false,
                     terserOptions: {
+                        format: {comments: false},
                         compress: {drop_console: true}
-                    }
+                    },
+                    extractComments: false,
                 })
             ]
         }

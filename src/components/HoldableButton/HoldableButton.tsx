@@ -18,9 +18,9 @@ const HoldableButton = memo((props: PropsType) => {
     const { classes, setClasses } = useClasses();
     useEffect(() => setClasses({HoldableButton__off: props.off}), [props.off]);
 
-    const spanRef   = useRef<HTMLAnchorElement>();
-    const timer     = useRef<HighResolutionTimer>();
-    const sound     = useRef<Sound>();
+    const spanRef   = useRef<HTMLAnchorElement>(null!);
+    const timer     = useRef<HighResolutionTimer>(null!);
+    const sound     = useRef<Sound>(null!);
     const isPressed = useRef(false);
 
     useConstructor(() => {

@@ -1,7 +1,7 @@
 type Callback = (timer: HighResolutionTimer) => void;
 
 export default class HighResolutionTimer {
-    callback:    Callback;
+    callback:    Callback|null;
     duration:    number;
     delay:       number;
     startTime:   number|undefined;
@@ -10,7 +10,7 @@ export default class HighResolutionTimer {
     totalTicks:  number = 0;
     deltaTime:   number = 0;
 
-    constructor(duration: number, delay: number = 0, callback: Callback = null) {
+    constructor(duration: number, delay: number = 0, callback: Callback|null = null) {
         this.duration = duration;
         this.delay = delay;
         this.callback = callback;
@@ -33,7 +33,7 @@ export default class HighResolutionTimer {
             this.deltaTime = this.currentTime - lastTime;
         }
 
-        this.callback(this);
+        this.callback!(this);
 
         const nextTick = this.duration - (this.currentTime - (this.startTime + (this.totalTicks * this.duration)));
         this.totalTicks++;
@@ -42,10 +42,11 @@ export default class HighResolutionTimer {
     }
 
     start() {
-        console.assert(this.callback !== null, "Timer callback was not set.");
+        if (this.callback === null) {
+            throw Error("Timer callback was not set.");
+        }
 
         this.reset();
-
         this.timeoutId = window.setTimeout(() => this.tick(), this.delay);
     }
 

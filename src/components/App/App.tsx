@@ -8,7 +8,7 @@ import "./App.scss";
 
 export default function App() {
     const [mode, setMode] = useState<types.AlarmClockMode>("idle");
-    const [time, setTime] = useState<types.Time>();
+    const [time, setTime] = useState<types.Time>({hours: 0, minutes: 0});
     const timeoutId = useRef<number>();
 
     useConstructor(() => {

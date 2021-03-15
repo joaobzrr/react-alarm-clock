@@ -5,7 +5,7 @@ type BufferInfo = {
 };
 
 export default class AudioManager {
-    static instance: AudioManager = null;
+    static instance: AudioManager|null = null;
     context: AudioContext;
     buffers: {[path: string]: BufferInfo} = {};
 
@@ -52,7 +52,7 @@ export default class AudioManager {
 export class Sound {
     manager: AudioManager;
     bufferInfo: BufferInfo;
-    currentSource: AudioBufferSourceNode;
+    currentSource: AudioBufferSourceNode|null;
 
     constructor(manager: AudioManager, bufferInfo: BufferInfo) {
         this.manager = manager;

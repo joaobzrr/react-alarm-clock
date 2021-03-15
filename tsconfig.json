@@ -1,13 +1,14 @@
 {
     "compilerOptions": {
-        "module": "es6",
+        "target": "esnext",
         "moduleResolution": "node",
-        "target": "es3",
-        "jsx": "react",
+        "strict": true,
         "noImplicitAny": true,
-        "sourceMap": true,
         "esModuleInterop": true,
-        "downlevelIteration": true
+        "downlevelIteration": true,
+        "isolatedModules": true,
+        "sourceMap": true,
+        "jsx": "react"
     },
     "include": ["src/declarations.d.ts"]
 }

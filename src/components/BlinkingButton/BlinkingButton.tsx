@@ -15,9 +15,9 @@ type PropsType = React.PropsWithChildren<{
 export default function BlinkingButton(props: PropsType) {
     const { classes, setClasses } = useClasses();
 
-    const timer      = useRef<HighResolutionTimer>();
-    const pressSound = useRef<Sound>();
-    const blinkSound = useRef<Sound>();
+    const timer      = useRef<HighResolutionTimer>(null!);
+    const pressSound = useRef<Sound>(null!);
+    const blinkSound = useRef<Sound>(null!);
     const isLit      = useRef(false);
 
     const blink = (lit: boolean) => {
@@ -26,14 +26,14 @@ export default function BlinkingButton(props: PropsType) {
     }
 
     useConstructor(() => {
-        timer.current = new HighResolutionTimer(500, 500, () => {
-            blink(!isLit.current);
-            blinkSound.current.playIf(isLit.current);
-        });
-
         const audioManager = AudioManager.getInstance();
         pressSound.current = audioManager.createSound(props.pressSound);
         blinkSound.current = audioManager.createSound(props.blinkSound);
+
+        timer.current = new HighResolutionTimer(500, 500, () => {
+            blink(isLit.current);
+            blinkSound.current.playIf(isLit.current);
+        });
     });
 
     useEffect(() => {

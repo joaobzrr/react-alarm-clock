@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 export default function makeUseGlobal<T>(initialState: T) {
     let globalState = initialState;
-    const listeners = new Set();
+    const listeners = new Set<Function>();
 
     const setState = (value: T) => {
         globalState = value;
