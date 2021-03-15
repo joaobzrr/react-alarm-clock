@@ -1,5 +1,5 @@
 import React, { memo, useMemo, useCallback } from "react";
-import HoldableButton from "@components/HoldableButton";
+import HoldableButton from "$components/HoldableButton";
 import { PlusIcon, MinusIcon } from "./icons";
 import usePressed from "./usePressed";
 import ChangeTimeButtonPressAndHoldSoundPath from "./ChangeTimeButtonPressAndHold.mp3";

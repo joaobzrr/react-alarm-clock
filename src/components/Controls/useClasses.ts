@@ -1,7 +1,13 @@
-import makeUseClasses from "@hooks/makeUseClasses";
-const [useClasses, serializeClasses] = makeUseClasses({
-    Controls:            {init: true,  group: 0, precedence: 1},
-    Controls__isNotIdle: {init: false, group: 1, precedence: 2}
-});
+import make from "@bzrr/useclasses";
+const { useClasses, serializeClasses } = make([
+    {
+        name: "Controls",
+        group: "default"
+    },
+    {
+        name: "Controls__isNotIdle",
+        group: null
+    }
+]);
 
 export { useClasses, serializeClasses };

@@ -1,10 +1,25 @@
-import makeUseClasses from "@hooks/makeUseClasses";
-const [useClasses, serializeClasses] = makeUseClasses({
-    button:                   {init: true,  group: 0, precedence: 1},
-    HoldableButton:           {init: true,  group: 0, precedence: 2},
-    HoldableButton__pressed:  {init: false, group: 1, precedence: 3},
-    HoldableButton__released: {init: false, group: 1, precedence: 3},
-    HoldableButton__off:      {init: false, group: 1, precedence: 3},
-});
+import make from "@bzrr/useclasses";
+const { useClasses, serializeClasses } = make([
+    {
+        name: "button",
+        group: "default"
+    },
+    {
+        name: "HoldableButton",
+        group: "default"
+    },
+    {
+        name: "HoldableButton__pressed",
+        group: 1
+    },
+    {
+        name: "HoldableButton__released",
+        group: 1
+    },
+    {
+        name: "HoldableButton__off",
+        group: 1
+    }
+]);
 
 export { useClasses, serializeClasses };

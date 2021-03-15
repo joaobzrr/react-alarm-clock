@@ -1,8 +1,18 @@
-import makeUseClasses from "@hooks/makeUseClasses";
-const [useClasses, serializeClasses] = makeUseClasses({
-    button:                {init: true,  group: 0, precedence: 1},
-    BlinkingButton:        {init: true,  group: 0, precedence: 2},
-    BlinkingButton__isLit: {init: false, group: 1, precedence: 3}
-});
+import make from "@bzrr/useclasses";
+
+const { useClasses, serializeClasses } = make([
+    {
+        name: "button",
+        group: "default"
+    },
+    {
+        name: "BlinkingButton",
+        group: "default"
+    },
+    {
+        name: "BlinkingButton__isLit",
+        group: null
+    }
+]);
 
 export { useClasses, serializeClasses };

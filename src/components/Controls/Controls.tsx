@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from "react";
-import ArmButton from "@components/ArmButton";
-import ChangeTimeButton from "@components/ChangeTimeButton";
+import ArmButton from "$components/ArmButton";
+import ChangeTimeButton from "$components/ChangeTimeButton";
 import { useClasses, serializeClasses } from "./useClasses";
 import "./Controls.scss";
 
@@ -12,8 +12,7 @@ type PropsType = {
 
 export default function Controls(props: PropsType) {
     const {mode, armButtonCallback, changeTimeButtonCallback} = props;
-
-    const [classes, setClasses] = useClasses();
+    const { classes, setClasses } = useClasses();
 
     const isNotIdle = mode !== "idle";
     useEffect(() => setClasses({Controls__isNotIdle: isNotIdle}), [isNotIdle]);

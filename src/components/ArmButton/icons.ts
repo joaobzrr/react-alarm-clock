@@ -1,4 +1,4 @@
-import Icon from "@components/Icon";
+import Icon from "$components/Icon";
 
 import PlaySvg from "./play.svg";
 export const PlayIcon = Icon(PlaySvg);

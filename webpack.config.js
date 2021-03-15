@@ -1,57 +1,44 @@
 const path = require("path");
-
-const TerserPlugin           = require("terser-webpack-plugin");
-const MiniCssExtractPlugin   = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin      = require("html-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-const rootDir   = __dirname;
-const distDir   = path.resolve(rootDir, "dist");
-const srcDir    = path.resolve(rootDir, "src");
-const assetsDir = path.resolve(srcDir, "assets");
-const outputDir = distDir;
+const rootDir       = __dirname;
+const srcDir        = path.resolve(rootDir, "src");
+const componentsDir = path.resolve(srcDir, "components");
+const hooksDir      = path.resolve(srcDir, "hooks");
+const assetsDir     = path.resolve(srcDir, "assets");
+const distDir       = path.resolve(rootDir, "dist");
+const ghPagesDir    = path.resolve(rootDir, "gh-pages");
+
+const entryFileName    = "index.tsx";
+const templateFileName = "index.hbs";
+const faviconFileName  = "favicon.ico";
 
 const dotenv = require("dotenv").config({
     path: path.resolve(rootDir, ".env")
 }).parsed;
 
-const entryFilename    = "index.tsx";
-const templateFilename = "index.hbs";
-const faviconFilename  = "favicon.ico";
+const postCssLoader = {
+    loader: "postcss-loader",
+    options: {
+        postcssOptions: {
+            config: "postcss.config.js"
+        }
+    }
+};
 
 module.exports = env => {
-    const mode = (env.mode === "development") ? "development" : "production";
-
-    let publicPath = "/";
-    if (env.mode === "github") {
-        publicPath = `/${dotenv.REPO_NAME}/`;
-    }
-
-    const plugins = [
-        new CleanWebpackPlugin({
-            cleanOnceBeforeBuildPatterns: ["**/*", "!.git"]
-        }),
-        new HtmlWebpackPlugin({
-            template: path.resolve(srcDir, templateFilename),
-            favicon:  path.resolve(assetsDir, "images", faviconFilename),
-            inject: false
-        })
-    ];
-
-    if (mode !== "development") {
-        const miniCssExtractPlugin = new MiniCssExtractPlugin({
-            filename: "static/css/[name].[fullhash].css"
-        });
-        plugins.unshift(miniCssExtractPlugin);
-    }
+    const config = getConfig(env.config);
 
     const result = {
-        mode: mode,
-        entry: path.resolve(srcDir, entryFilename),
+        mode: config.mode,
+        entry: path.resolve(srcDir, entryFileName),
         output: {
-            filename: "static/js/[name].[fullhash].js",
-            path: outputDir,
-            publicPath: publicPath
+            filename:   "static/js/[name].[fullhash].js",
+            path:       config.outputPath,
+            publicPath: config.publicPath
         },
         module: {
             rules: [
@@ -62,22 +49,16 @@ module.exports = env => {
                 {
                     test: /\.(scss|css)$/,
                     use: [
-                        // mini-css-extract-plugin is more often used in production mode
-                        // to get separate css files. For development mode
-                        // (including webpack-dev-server) you can use style-loader, because it
-                        // injects CSS into the DOM using multiple <style> tags and works faster.
-                        mode === "development" ? "style-loader" : MiniCssExtractPlugin.loader,
+                        config.styleLoader,
                         "css-loader",
-                        {
-                            loader: "postcss-loader",
-                            options: {
-                                postcssOptions: {
-                                    config: path.resolve(__dirname, "postcss.config.js")
-                                }
-                            }
-                        },
+                        postCssLoader,
                         "sass-loader"
                     ]
+                },
+                {
+                    test: /\.js$/,
+                    loader: "source-map-loader",
+                    enforce: "pre"
                 },
                 {
                     test: /\.(woff|woff2|eot|ttf|otf)$/i,
@@ -103,13 +84,13 @@ module.exports = env => {
                 }
             ]
         },
-        plugins: plugins,
+        plugins: config.plugins,
         resolve: {
             alias: {
-                "@src":        srcDir,
-                "@components": path.resolve(srcDir, "components"),
-                "@hooks":      path.resolve(srcDir, "hooks"),
-                "@assets":     assetsDir,
+                "$src":        srcDir,
+                "$components": componentsDir,
+                "$hooks":      hooksDir,
+                "$assets":     assetsDir,
             },
             extensions: [".js", ".jsx", ".json", ".ts", ".tsx"]
         },
@@ -117,12 +98,13 @@ module.exports = env => {
             contentBase: distDir,
             hot: true
         },
-        devtool: mode === "development" ? "inline-source-map" : false,
+        devtool: config.devtool,
         optimization: {
             minimizer: [
                 new TerserPlugin({
+                    extractComments: false,
                     terserOptions: {
-                        compress: { drop_console: true, }
+                        compress: {drop_console: true}
                     }
                 })
             ]
@@ -131,3 +113,49 @@ module.exports = env => {
 
     return result;
 };
+
+function getConfig(config) {
+    const plugins = [
+        new CleanWebpackPlugin({
+            cleanOnceBeforeBuildPatterns: ["**/*", "!.git"]
+        }),
+        new HtmlWebpackPlugin({
+            template: path.resolve(srcDir, templateFileName),
+            favicon:  path.resolve(assetsDir, "images", faviconFileName),
+            inject:   false
+        })
+    ];
+
+    let mode, devtool, styleLoader;
+    if (config === "development") {
+        mode = "development";
+        devtool = "inline-source-map";
+        styleLoader = "style-loader";
+    } else {
+        mode = "production";
+        devtool = false;
+        styleLoader = MiniCssExtractPlugin.loader;
+
+        plugins.unshift(new MiniCssExtractPlugin({
+            filename: "static/css/[name].[fullhash].css"
+        }));
+    }
+
+    let outputPath, publicPath;
+    if (config === "gh-pages") {
+        outputPath = ghPagesDir;
+        publicPath = `/${dotenv.REPO_NAME}/`;
+    } else {
+        outputPath = distDir;
+        publicPath = "/";
+    }
+
+    return {
+        mode: mode,
+        outputPath: outputPath,
+        publicPath: publicPath,
+        devtool: devtool,
+        styleLoader: styleLoader,
+        plugins: plugins
+    };
+}

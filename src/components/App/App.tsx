@@ -1,9 +1,9 @@
 import React, { useState, useRef, useCallback } from "react";
-import Clock from "@components/Clock";
-import Controls from "@components/Controls";
-import useConstructor from "@hooks/useConstructor";
-import HighResolutionTimer from "@src/HighResolutionTimer";
-import { calcTimeUntilAlert, changeTime, getCurrentTime } from "@src/time";
+import Clock from "$components/Clock";
+import Controls from "$components/Controls";
+import useConstructor from "$hooks/useConstructor";
+import HighResolutionTimer from "$src/HighResolutionTimer";
+import { calcTimeUntilAlert, changeTime, getCurrentTime } from "$src/time";
 import "./App.scss";
 
 export default function App() {

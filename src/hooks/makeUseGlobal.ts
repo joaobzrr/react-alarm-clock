@@ -22,7 +22,7 @@ export default function makeUseGlobal<T>(initialState: T) {
             listener();
 
             return () => {
-                return () => listeners.delete(listener);
+                listeners.delete(listener);
             }
         }, []);
 

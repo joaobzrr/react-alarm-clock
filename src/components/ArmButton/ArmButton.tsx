@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import BlinkingButton from "@components/BlinkingButton";
+import BlinkingButton from "$components/BlinkingButton";
 import { PlayIcon, PauseIcon } from "./icons";
 import { useClasses, serializeClasses } from "./useClasses";
 import ArmButtonPressSoundPath from "./ArmButtonPress.mp3";
@@ -11,11 +11,11 @@ type PropsType = {
     mode: types.AlarmClockMode;
 };
 
-// @@Note: Right now, whenever the time changes, onPress() gets
+// @Note: Right now, whenever the time changes, onPress() gets
 // re-evaluated in <App> and, as a consequence, ArmButton re-renders.
 // Maybe there's a way to avoid this kind of thing?
 export default function ArmButton(props: PropsType) {
-    const [classes, setClasses] = useClasses();
+    const { classes, setClasses } = useClasses();
 
     useEffect(() => setClasses({
         ArmButton__isArmed: props.mode !== "idle"

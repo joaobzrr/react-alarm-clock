@@ -1,4 +1,4 @@
-@import "@assets/css/globals";
+@import "$assets/css/globals";
 
 .ArmButton {
     @include arm-button-press-transition("flex-grow, box-shadow");

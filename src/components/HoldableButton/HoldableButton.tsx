@@ -1,8 +1,8 @@
 import React, { memo, useEffect, useRef } from "react";
-import useConstructor from "@hooks/useConstructor";
+import useConstructor from "$hooks/useConstructor";
 import { useClasses, serializeClasses } from "./useClasses";
-import HighResolutionTimer from "@src/HighResolutionTimer";
-import AudioManager, { Sound } from "@src/AudioManager";
+import HighResolutionTimer from "$src/HighResolutionTimer";
+import AudioManager, { Sound } from "$src/AudioManager";
 
 type PropsType = React.PropsWithChildren<{
     onPress:   Function;
@@ -15,7 +15,7 @@ type PropsType = React.PropsWithChildren<{
 }>;
 
 const HoldableButton = memo((props: PropsType) => {
-    const [classes, setClasses] = useClasses();
+    const { classes, setClasses } = useClasses();
     useEffect(() => setClasses({HoldableButton__off: props.off}), [props.off]);
 
     const spanRef   = useRef<HTMLAnchorElement>();
@@ -33,7 +33,7 @@ const HoldableButton = memo((props: PropsType) => {
     const press = (e: any) => {
         e.preventDefault();
 
-        // @@Todo: Are we checking this correctly?
+        // @Todo: Are we checking this correctly?
         if (e.type === "mousedown" && (("buttons" in e && e.buttons !== 1) || ("which" in e && e.which !== 1))) {
             return;
         }

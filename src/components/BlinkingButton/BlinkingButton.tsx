@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
-import HighResolutionTimer from "@src/HighResolutionTimer";
-import AudioManager, { Sound } from "@src/AudioManager";
-import useConstructor from "@hooks/useConstructor";
+import HighResolutionTimer from "$src/HighResolutionTimer";
+import AudioManager, { Sound } from "$src/AudioManager";
+import useConstructor from "$hooks/useConstructor";
 import { useClasses, serializeClasses } from "./useClasses";
 
 type PropsType = React.PropsWithChildren<{
@@ -13,7 +13,7 @@ type PropsType = React.PropsWithChildren<{
 }>;
 
 export default function BlinkingButton(props: PropsType) {
-    const [classes, setClasses] = useClasses();
+    const { classes, setClasses } = useClasses();
 
     const timer      = useRef<HighResolutionTimer>();
     const pressSound = useRef<Sound>();
@@ -40,7 +40,7 @@ export default function BlinkingButton(props: PropsType) {
         if (props.blinking) {
             timer.current.start();
         } else {
-            // @@Note: Sound won't stop immediately after state change.
+            // @Note: Sound won't stop immediately after state change.
             timer.current.stop();
             blink(false);
         }

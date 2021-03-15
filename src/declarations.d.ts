@@ -19,7 +19,7 @@ declare namespace types {
 
 interface Window {
     AudioContext:       typeof AudioContext
-    webkitAudioContext: typeof AudioContext // @@Note: Why do we need this?
+    webkitAudioContext: typeof AudioContext // @Note: Why do we need this?
 }
 
 declare module "*.mp3";

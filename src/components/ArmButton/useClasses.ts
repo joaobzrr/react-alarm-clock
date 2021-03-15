@@ -1,7 +1,13 @@
-import makeUseClasses from "@hooks/makeUseClasses";
-const [useClasses, serializeClasses] = makeUseClasses({
-    ArmButton:          {init: true,  group: 0, precedence: 1},
-    ArmButton__isArmed: {init: false, group: 1, precedence: 2}
-});
+import make from "@bzrr/useclasses";
+const { useClasses, serializeClasses } = make([
+    {
+        name: "ArmButton",
+        group: "default"
+    },
+    {
+        name: "ArmButton__isArmed",
+        group: null
+    }
+]);
 
 export { useClasses, serializeClasses };
