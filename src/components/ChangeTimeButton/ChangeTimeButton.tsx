@@ -6,35 +6,36 @@ import ChangeTimeButtonPressAndHoldSoundPath from "./ChangeTimeButtonPressAndHol
 import "./ChangeTimeButton.scss";
 
 type PropsType = {
-    callback: (type: types.ChangeTimeButtonType) => void;
+    callback: () => void;
     off: boolean;
     type: types.ChangeTimeButtonType;
     className: string;
 };
 
 const ChangeTimeButton = memo((props: PropsType) => {
-    const { callback, type, off, className } = props;
-
     const [pressed, setPressed] = usePressed();
-    const disabled = pressed !== null && pressed !== type;
 
-    const onPress   = useCallback(() => { callback(type); setPressed(type) }, [type]);
-    const onRelease = useCallback(() => setPressed(null), []);
-    const onHold    = useCallback(() => callback(type), [type]);
+    const onPress = useCallback(() => {
+        props.callback();
+        setPressed(props.type);
+    }, [props.type]);
 
-    const icon = useMemo(() => {
-        return (type === "h+" || type === "m+") ? <PlusIcon/> : <MinusIcon/>;
+    const onRelease = useCallback(() => {
+        setPressed(null);
     }, []);
+
+    const disabled = pressed !== null && pressed !== props.type;
+    const icon = (props.type === "h+" || props.type === "m+") ? <PlusIcon/> : <MinusIcon/>;
 
     return (
         <HoldableButton
             onPress={onPress}
             onRelease={onRelease}
-            onHold={onHold}
+            onHold={props.callback}
             disabled={disabled}
-            off={off}
+            off={props.off}
             sound={ChangeTimeButtonPressAndHoldSoundPath}
-            className={`ChangeTimeButton ${className}`}
+            className={`ChangeTimeButton ${props.className}`}
         >
             {icon}
         </HoldableButton>

@@ -20,7 +20,7 @@ export default function BlinkingButton(props: PropsType) {
     const blinkSound = useRef<Sound>(null!);
     const isLit      = useRef(false);
 
-    const blink = (lit: boolean) => {
+    const setIsLit = (lit: boolean) => {
         isLit.current = lit;
         setClasses({BlinkingButton__isLit: lit});
     }
@@ -31,7 +31,7 @@ export default function BlinkingButton(props: PropsType) {
         blinkSound.current = audioManager.createSound(props.blinkSound);
 
         timer.current = new HighResolutionTimer(500, 500, () => {
-            blink(isLit.current);
+            setIsLit(!isLit.current);
             blinkSound.current.playIf(isLit.current);
         });
     });
@@ -42,7 +42,7 @@ export default function BlinkingButton(props: PropsType) {
         } else {
             // @Note: Sound won't stop immediately after state change.
             timer.current.stop();
-            blink(false);
+            setIsLit(false);
         }
     }, [props.blinking]);
 

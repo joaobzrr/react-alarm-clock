@@ -6,43 +6,45 @@ import "./Controls.scss";
 
 type PropsType = {
     mode: types.AlarmClockMode;
-    armButtonCallback: () => void;
-    changeTimeButtonCallback: (type: types.ChangeTimeButtonType) => void;
+    changeMode: () => void;
+    incHours:   () => void;
+    decHours:   () => void;
+    incMinutes: () => void;
+    decMinutes: () => void;
 };
 
 export default function Controls(props: PropsType) {
-    const {mode, armButtonCallback, changeTimeButtonCallback} = props;
     const { classes, setClasses } = useClasses();
 
-    const isNotIdle = mode !== "idle";
+    const isNotIdle = props.mode !== "idle";
     useEffect(() => setClasses({Controls__isNotIdle: isNotIdle}), [isNotIdle]);
 
     return (
         <div className={serializeClasses(classes)}>
             <ChangeTimeButton
-                callback={changeTimeButtonCallback}
+                callback={props.incHours}
                 off={isNotIdle}
                 type="h+"
                 className="ChangeTimeButton__left"
             />
             <ChangeTimeButton
-                callback={changeTimeButtonCallback}
+                callback={props.decHours}
                 off={isNotIdle}
                 type="h-"
                 className="ChangeTimeButton__left"
             />
             <ArmButton
-                callback={armButtonCallback}
-                mode={mode}
+                callback={props.changeMode}
+                mode={props.mode}
             />
             <ChangeTimeButton
-                callback={changeTimeButtonCallback}
+                callback={props.decMinutes}
                 off={isNotIdle}
                 type="m-"
                 className="ChangeTimeButton__right"
             />
             <ChangeTimeButton
-                callback={changeTimeButtonCallback}
+                callback={props.incMinutes}
                 off={isNotIdle}
                 type="m+"
                 className="ChangeTimeButton__right"
