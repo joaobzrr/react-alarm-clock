@@ -14,7 +14,7 @@ export default class AudioManager {
         this.buffers = {};
     }
 
-    static getInstance() {
+    static getInstance(): AudioManager {
         if (AudioManager.instance === null) {
             AudioManager.instance = new AudioManager();
         }
@@ -22,7 +22,7 @@ export default class AudioManager {
         return AudioManager.instance;
     }
 
-    load(bufferInfo: BufferInfo) {
+    load(bufferInfo: BufferInfo): void {
         const request = new XMLHttpRequest();
         request.open("GET", bufferInfo.path);
         request.responseType = "arraybuffer";
@@ -35,7 +35,7 @@ export default class AudioManager {
         request.send();
     }
 
-    createSound(url: string) {
+    createSound(url: string): Sound {
         if (url in this.buffers) {
             return new Sound(this, this.buffers[url]);
         }
@@ -60,7 +60,7 @@ export class Sound {
         this.currentSource = null;
     }
 
-    play() {
+    play(): void {
         if (!this.bufferInfo.ready) {
             return
         }
@@ -74,11 +74,5 @@ export class Sound {
         this.currentSource.buffer = this.bufferInfo.buffer;
         this.currentSource.connect(context.destination);
         this.currentSource.start();
-    }
-
-    playIf(condition: boolean) {
-        if (condition) {
-            this.play()
-        }
     }
 }

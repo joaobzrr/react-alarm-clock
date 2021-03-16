@@ -3,7 +3,6 @@ import Clock from "$components/Clock";
 import Controls from "$components/Controls";
 import useAlarmClock from "$hooks/useAlarmClock";
 import useConstructor from "$hooks/useConstructor";
-import HighResolutionTimer from "$src/HighResolutionTimer";
 import { calcTimeUntilAlert, getCurrentTime } from "$src/time";
 import "./App.scss";
 
@@ -15,7 +14,7 @@ export default function App() {
 
     useConstructor(() => {
         const json = localStorage.getItem("time");
-        let time = (json === null) ? getCurrentTime() : JSON.parse(json);
+        let time = (json !== null) ? JSON.parse(json) : getCurrentTime();
         setTime(time);
     });
 

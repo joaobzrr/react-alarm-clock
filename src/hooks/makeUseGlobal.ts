@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
 
-export default function makeUseGlobal<T>(initialState: T) {
+export default function makeUseGlobal<T>(initialState: T): ReturnType<T> {
     let globalState = initialState;
-    const listeners = new Set<Function>();
+    const listeners = new Set<Listener>();
 
     const setState = (value: T) => {
         globalState = value;
-        listeners.forEach((listener: Function) => {
+        listeners.forEach((listener: Listener) => {
             listener();
         });
     }
 
-    return (): [T, Function] => {
+    return () => {
         const [state, _setState] = useState<T>(globalState);
 
         useEffect(() => {
@@ -29,3 +29,7 @@ export default function makeUseGlobal<T>(initialState: T) {
         return [state, setState];
     }
 }
+
+type Listener  = () => void;
+type SetFunction<T> = (value: T) => void;
+type ReturnType<T> = () => [T, SetFunction<T>];

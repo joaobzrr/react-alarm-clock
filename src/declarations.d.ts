@@ -1,12 +1,4 @@
 declare namespace types {
-    type AnyDictionary = {
-        [key: string]: any
-    };
-
-    type BoolDictionary = {
-        [key: string]: boolean
-    };
-
     type Time = {
         hours: number;
         minutes: number

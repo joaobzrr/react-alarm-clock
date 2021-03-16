@@ -1,11 +1,11 @@
 import { useRef } from "react";
 
-export default function useConstructor(callback: Function, args: any[] = []) {
+export default function useConstructor(callback: () => void): void {
     const hasBeenCalled = useRef(false);
     if (hasBeenCalled.current) {
         return;
     } else {
-        callback(...args);
+        callback();
         hasBeenCalled.current = true;
     }
 }
