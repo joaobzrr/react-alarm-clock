@@ -1,7 +1,7 @@
 {
     "name": "react-alarm-clock",
     "version": "1.0.0",
-    "description": "",
+    "description": "Alarm clock made with React.js",
     "author": "João Bezerra",
     "license": "MIT",
     "main": "webpack.config.js",
