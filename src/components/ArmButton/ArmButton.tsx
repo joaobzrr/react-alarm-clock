@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo } from "react";
+import { serializeClasses } from "@bzrr/useclasses";
 import BlinkingButton from "$components/BlinkingButton";
+import useClasses from "./useClasses";
 import { PlayIcon, PauseIcon } from "./icons";
-import { useClasses, serializeClasses } from "./useClasses";
 import ArmButtonPressSoundPath from "./ArmButtonPress.mp3";
 import ArmButtonBlinkSoundPath from "./ArmButtonBlink.mp3";
 import "./ArmButton.scss";

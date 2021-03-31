@@ -1,13 +1,6 @@
-import make from "@bzrr/useclasses";
-const { useClasses, serializeClasses } = make([
-    {
-        name: "Controls",
-        group: "default"
-    },
-    {
-        name: "Controls__isNotIdle",
-        group: null
-    }
-]);
+import { fromSchema } from "@bzrr/useclasses";
 
-export { useClasses, serializeClasses };
+export default fromSchema({
+    Controls: "default",
+    Controls__isNotIdle: null
+});

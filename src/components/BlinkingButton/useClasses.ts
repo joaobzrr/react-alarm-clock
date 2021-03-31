@@ -1,18 +1,7 @@
-import make from "@bzrr/useclasses";
+import { fromSchema } from "@bzrr/useclasses";
 
-const { useClasses, serializeClasses } = make([
-    {
-        name: "button",
-        group: "default"
-    },
-    {
-        name: "BlinkingButton",
-        group: "default"
-    },
-    {
-        name: "BlinkingButton__isLit",
-        group: null
-    }
-]);
-
-export { useClasses, serializeClasses };
+export default fromSchema({
+    button: "default",
+    BlinkingButton: "default",
+    BlinkingButton__isLit: null
+});

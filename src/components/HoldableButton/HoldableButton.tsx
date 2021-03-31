@@ -1,6 +1,7 @@
 import React, { memo, useEffect, useRef } from "react";
+import { serializeClasses } from "@bzrr/useclasses";
 import useConstructor from "$hooks/useConstructor";
-import { useClasses, serializeClasses } from "./useClasses";
+import useClasses from "./useClasses";
 import Timer from "$src/Timer";
 import AudioManager, { Sound } from "$src/AudioManager";
 

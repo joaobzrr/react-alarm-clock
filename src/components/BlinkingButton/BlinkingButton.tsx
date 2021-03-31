@@ -1,8 +1,9 @@
 import React, { useRef, useEffect } from "react";
+import { serializeClasses } from "@bzrr/useclasses";
 import Timer from "$src/Timer";
 import AudioManager, { Sound } from "$src/AudioManager";
 import useConstructor from "$hooks/useConstructor";
-import { useClasses, serializeClasses } from "./useClasses";
+import useClasses from "./useClasses";
 
 type PropsType = React.PropsWithChildren<{
     onPress:    Function;

@@ -1,13 +1,6 @@
-import make from "@bzrr/useclasses";
-const { useClasses, serializeClasses } = make([
-    {
-        name: "ArmButton",
-        group: "default"
-    },
-    {
-        name: "ArmButton__isArmed",
-        group: null
-    }
-]);
+import { fromSchema } from "@bzrr/useclasses";
 
-export { useClasses, serializeClasses };
+export default fromSchema({
+    ArmButton: "default",
+    ArmButton__isArmed: null
+});

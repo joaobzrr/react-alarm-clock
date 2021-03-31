@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo } from "react";
+import { serializeClasses } from "@bzrr/useclasses";
 import ArmButton from "$components/ArmButton";
 import ChangeTimeButton from "$components/ChangeTimeButton";
-import { useClasses, serializeClasses } from "./useClasses";
+import useClasses from "./useClasses";
 import "./Controls.scss";
 
 type PropsType = {

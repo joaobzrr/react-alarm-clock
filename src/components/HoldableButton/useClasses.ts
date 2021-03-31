@@ -1,25 +1,9 @@
-import make from "@bzrr/useclasses";
-const { useClasses, serializeClasses } = make([
-    {
-        name: "button",
-        group: "default"
-    },
-    {
-        name: "HoldableButton",
-        group: "default"
-    },
-    {
-        name: "HoldableButton__pressed",
-        group: 1
-    },
-    {
-        name: "HoldableButton__released",
-        group: 1
-    },
-    {
-        name: "HoldableButton__off",
-        group: 1
-    }
-]);
+import { fromSchema } from "@bzrr/useclasses";
 
-export { useClasses, serializeClasses };
+export default fromSchema({
+    button: "default",
+    HoldableButton: "default",
+    HoldableButton__pressed: 1,
+    HoldableButton__released: 1,
+    HoldableButton__off: 1
+});
